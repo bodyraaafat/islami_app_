@@ -1,12 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class HadethView extends StatelessWidget {
+import 'hadethdetailsview.dart';
+
+class HadethView extends StatefulWidget {
   const HadethView({super.key});
 
   @override
+  State<HadethView> createState() => _HadethViewState();
+}
+
+class _HadethViewState extends State<HadethView> {
+  List<HadethData> allHadethContent = [];
+  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Hadeth View"),
+    var theme = Theme.of(context);
+    var mediaquery = MediaQuery.of(context).size;
+    if (allHadethContent.isEmpty) loaddata();
+    return Scaffold(
+      body: Column(
+        children: [
+          Image.asset(
+            "assets/images/hadeth_header.png",
+            width: mediaquery.width,
+            height: mediaquery.height * 0.2,
+          ),
+          Divider(
+            color: theme.primaryColor,
+            thickness: 2,
+          ),
+          Text(
+            "الأحاديث",
+            style: theme.textTheme.titleLarge,
+          ),
+          Divider(
+            color: theme.primaryColor,
+            thickness: 2,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, index) => InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    HadethDetailsView.routename,
+                    arguments: allHadethContent[index],
+                  );
+                },
+                child: Text(allHadethContent[index].title,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.w400)),
+              ),
+              itemCount: allHadethContent.length,
+            ),
+          )
+        ],
+      ),
     );
   }
+
+  Future<void> loaddata() async {
+    String content = await rootBundle.loadString("assets/files/ahadeth.txt");
+    List<String> allHadethList = content.split("#");
+
+    for (int i = 0; i < allHadethList.length; i++) {
+      String singleHadeth = allHadethList[i].trim();
+
+      int titleIndex = singleHadeth.indexOf("\n");
+
+      String title = singleHadeth.substring(0, titleIndex);
+      String content = singleHadeth.substring(titleIndex + 1);
+
+      HadethData hadethData = HadethData(
+        title,
+        content,
+      );
+      allHadethContent.add(hadethData);
+    }
+    setState(() {});
+  }
+}
+
+class HadethData {
+  final String title;
+  final String content;
+
+  HadethData(this.title, this.content);
 }

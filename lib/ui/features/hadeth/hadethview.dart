@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:islami_app_full/constant/settings_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'hadethdetailsview.dart';
 
@@ -14,6 +16,7 @@ class _HadethViewState extends State<HadethView> {
   List<HadethData> allHadethContent = [];
   @override
   Widget build(BuildContext context) {
+    var vm = Provider.of<SettingsProvider>(context);
     var theme = Theme.of(context);
     var mediaquery = MediaQuery.of(context).size;
     if (allHadethContent.isEmpty) loaddata();
@@ -26,15 +29,15 @@ class _HadethViewState extends State<HadethView> {
             height: mediaquery.height * 0.2,
           ),
           Divider(
-            color: theme.primaryColor,
             thickness: 2,
           ),
           Text(
             "الأحاديث",
-            style: theme.textTheme.titleLarge,
+            style: vm.isdark
+                ? theme.textTheme.titleLarge?.copyWith(color: Colors.white)
+                : theme.textTheme.titleLarge?.copyWith(color: Colors.black),
           ),
           Divider(
-            color: theme.primaryColor,
             thickness: 2,
           ),
           Expanded(
@@ -49,8 +52,11 @@ class _HadethViewState extends State<HadethView> {
                 },
                 child: Text(allHadethContent[index].title,
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w400)),
+                    style: vm.isdark
+                        ? theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w400, color: Colors.white)
+                        : theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w400, color: Colors.black)),
               ),
               itemCount: allHadethContent.length,
             ),

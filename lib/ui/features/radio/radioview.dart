@@ -5,8 +5,8 @@ class RadioView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Radio View"),
+    return Column(
+      children: [Image.asset("assets/images/radio_screen.png")],
     );
   }
 }

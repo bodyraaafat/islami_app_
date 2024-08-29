@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:islami_app_full/constant/settings_provider.dart';
 import 'package:islami_app_full/ui/features/quran/qurandetails.dart';
 import 'package:islami_app_full/ui/features/quran/suratitlewideget.dart';
+import 'package:provider/provider.dart';
 
 class QuranView extends StatelessWidget {
   QuranView({super.key});
@@ -241,6 +243,7 @@ class QuranView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var vm = Provider.of<SettingsProvider>(context);
     var theme = Theme.of(context);
     var mediaquery = MediaQuery.of(context).size;
     return Scaffold(
@@ -252,8 +255,7 @@ class QuranView extends StatelessWidget {
             height: mediaquery.height * 0.2,
           ),
           Divider(
-            color: theme.primaryColor,
-            thickness: 2,
+            thickness: 1.75,
           ),
           Row(
             children: [
@@ -261,26 +263,33 @@ class QuranView extends StatelessWidget {
                 child: Text(
                   "عدد الآيات",
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.titleLarge,
+                  style: vm.isdark
+                      ? theme.textTheme.titleLarge
+                          ?.copyWith(color: Colors.white)
+                      : theme.textTheme.titleLarge
+                          ?.copyWith(color: Colors.black),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 3,
                 height: 40,
-                color: theme.primaryColor,
+                child: VerticalDivider(),
               ),
               Expanded(
                 child: Text(
                   "إسم السورة",
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.titleLarge,
+                  style: vm.isdark
+                      ? theme.textTheme.titleLarge
+                          ?.copyWith(color: Colors.white)
+                      : theme.textTheme.titleLarge
+                          ?.copyWith(color: Colors.black),
                 ),
               ),
             ],
           ),
           Divider(
-            color: theme.primaryColor,
-            thickness: 2,
+            thickness: 1.75,
           ),
           Expanded(
             child: ListView.builder(

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:islami_app_full/constant/apptheme.dart';
 import 'package:islami_app_full/constant/settings_provider.dart';
@@ -7,7 +6,7 @@ import 'package:islami_app_full/ui/features/home/homeview.dart';
 import 'package:islami_app_full/ui/features/quran/qurandetails.dart';
 import 'package:islami_app_full/ui/features/settings/settings_view.dart';
 import 'package:islami_app_full/ui/features/splash/splashview.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
